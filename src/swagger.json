@@ -1,0 +1,227 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Desafio 04 NodeJS Documentation",
+    "description": "This is the complete API documentation for challenge 04",
+    "version": "1.0.0",
+    "contact": {
+      "email": "joaoeduardodias123@gmail.com"
+    }
+  
+  },
+  "paths": {
+    "/users":{
+      "post":{
+        "tags":["Users"],
+        "sumary":"Create user",
+        "description":"Create a new user",
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "name":{"type":"string"},
+                  "email":{"type":"string"}
+                },
+                "example":{
+                  "name": "João Dias",
+                  "email": "email@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description":"User create with success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "admin":{"type":"boolean"},
+                    "id":{"type":"string"},
+                    "name":{"type":"string"},
+                    "email":{"type":"string"},
+                    "created_at":{"type":"Date"},
+                    "updated_at":{"type":"Date"}
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description":"Error found",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "error":{"type":"string"}
+                  },
+                  "example":{
+                   "error": "User already exists"
+                 }
+                }
+              }
+            }
+          }
+        }
+    },
+    "get":{
+      "tags":["Users"],
+      "sumary":"List all users",
+      "description":"List all users",
+      "parameters":[ {
+        "in":"header",
+        "name":"user_id",
+        "type":"string",
+        "required":true,
+        "description":"Id of user admin"
+       }],
+      "responses":{
+        "200":{
+          "description": "Success",
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"array",
+                "items":{
+                  "type":"object",
+                  "properties":{
+                    "name":{"type":"string"},
+                    "email":{"type":"string"}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400":{
+          "description": "Error found",
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "error":{"type":"string"}
+                },
+                "example":{
+                  "error": "Error occurred,please try again"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/users/{user_id}/admin":{
+    "patch":{
+      "tags":["Users"],
+      "sumary":"Turn user admin",
+      "description":"Turn a user in user admin",
+      "parameters":[
+        {
+          "in":"path",
+          "name":"user_id",
+          "type":"string",
+          "required": true,
+          "description":"Id of user for turn user admin "
+        }
+      ],
+      "responses":{
+        "200":{
+          "description":"Turned user admin success",
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "admin":{"type":"boolean"},
+                  "id":{"type":"string"},
+                  "name":{"type":"string"},
+                  "email":{"type":"string"},
+                  "created_at":{"type":"Date"},
+                  "updated_at":{"type":"Date"}
+                }
+              }
+            }
+          }
+        },
+        "404":{
+          "description":"Error found",
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "error":{"type":"string"}
+                },
+                "example":{
+                  "error": "Error occurred,please try again"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+   
+
+  },
+  "/users/{user_id}": {
+    "get":{
+      "tags":["Users"],
+      "sumary": "Show a user profile",
+      "description": "Show a user profile",
+      "parameters":[
+        {
+          "in":"path",
+          "name":"user_id",
+          "type":"string",
+          "description":"Id user for show profile",
+          "required":true
+        }
+      ],
+      "responses":{
+        "200":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "admin":{"type":"boolean"},
+                  "id":{"type":"string"},
+                  "name":{"type":"string"},
+                  "email":{"type":"string"},
+                  "created_at":{"type":"Date"},
+                  "updated_at":{"type":"Date"}
+                }
+              }
+            }
+          }
+        },
+        "404":{
+          "description":"Error found",
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "error":{"type":"string"}
+                },
+                "example":{
+                  "error": "User not exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  }
+
+}
